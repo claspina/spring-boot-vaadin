@@ -26,7 +26,7 @@ Using default schema of postgres in localhost - with user and password is postgr
 ```
 But you can change this on _*applications.properties*_ in _resources_ folder
 
-For run, you type
+For run, just type
 ```
 mvn spring-boot:run
 ```
