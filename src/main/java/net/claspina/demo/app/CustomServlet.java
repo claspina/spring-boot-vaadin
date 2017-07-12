@@ -18,7 +18,7 @@ public class CustomServlet extends SpringVaadinServlet {
             // Don't show any messages, redirect immediately to the session expired URL
             messages.setSessionExpiredNotificationEnabled(false);
             // Don't show any message, reload the page instead
-            messages.setCommunicationErrorNotificationEnabled(false);
+            messages.setCommunicationErrorNotificationEnabled(true);
             return messages;
         });
     }

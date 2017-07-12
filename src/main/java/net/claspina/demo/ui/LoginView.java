@@ -1,4 +1,4 @@
-package net.claspina.demo.ui.view;
+package net.claspina.demo.ui;
 
 import com.vaadin.event.ShortcutAction;
 import com.vaadin.icons.VaadinIcons;

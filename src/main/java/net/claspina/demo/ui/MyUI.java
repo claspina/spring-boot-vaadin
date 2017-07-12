@@ -3,6 +3,7 @@ package net.claspina.demo.ui;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
 import com.vaadin.annotations.VaadinServletConfiguration;
+import com.vaadin.annotations.Viewport;
 import com.vaadin.server.DefaultErrorHandler;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
@@ -12,8 +13,7 @@ import com.vaadin.ui.UI;
 import com.vaadin.ui.themes.ValoTheme;
 import net.claspina.demo.app.ApplicationConstant;
 import net.claspina.demo.app.security.SecurityUtils;
-import net.claspina.demo.ui.view.LoginView;
-import net.claspina.demo.ui.view.MainView;
+import net.claspina.demo.ui.view.AccessDeniedView;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.AccessDeniedException;
 
@@ -29,6 +29,7 @@ import javax.servlet.annotation.WebServlet;
 @SpringUI
 @Theme(ValoTheme.THEME_NAME)
 @Title(ApplicationConstant.NOMBRE_SISTEMA)
+@Viewport("width=device-width, initial-scale=1")
 public class MyUI extends UI {
 
     @Autowired
@@ -59,8 +60,21 @@ public class MyUI extends UI {
     private void handleError(com.vaadin.server.ErrorEvent event) {
         Throwable t = DefaultErrorHandler.findRelevantThrowable(event.getThrowable());
         if (t instanceof AccessDeniedException) {
-            Notification.show("You do not have permission to perform this operation",
-                    Notification.Type.WARNING_MESSAGE);
+
+            AccessDeniedException accessDeniedException = (AccessDeniedException) t;
+            Notification.show(accessDeniedException.getMessage(), Notification.Type.ERROR_MESSAGE);
+            //Notification.show("You do not have permission to perform this operation", Notification.Type.WARNING_MESSAGE);
+            getUI().getNavigator().navigateTo(AccessDeniedView.NAME);
+            return;
+
+        }else if (event.getThrowable().getCause().getCause().getCause() instanceof AccessDeniedException) {
+
+            AccessDeniedException accessDeniedException = (AccessDeniedException) event.getThrowable().getCause().getCause().getCause();
+            Notification.show(accessDeniedException.getMessage(), Notification.Type.ERROR_MESSAGE);
+            //Notification.show("You do not have permission to perform this operation", Notification.Type.WARNING_MESSAGE);
+            getUI().getNavigator().navigateTo(AccessDeniedView.NAME);
+            return;
+
         } else {
             DefaultErrorHandler.doDefault(event);
         }
