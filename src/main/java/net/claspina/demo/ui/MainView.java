@@ -55,7 +55,7 @@ public class MainView extends HorizontalLayout implements View {
 
     private void buildSideMenu() {
         sideMenu = new SideMenu();
-        sideMenu = new SideMenu();
+//        sideMenu = new SideMenu();
 
         navigator = new Navigator(UI.getCurrent(), sideMenu);
 
@@ -66,8 +66,8 @@ public class MainView extends HorizontalLayout implements View {
 
         UI.getCurrent().setNavigator(navigator);
 
-        navigator.addView(AdminView.NAME, AdminView.class);
-        navigator.addView(UserView.NAME, UserView.class);
+//        navigator.addView(AdminView.NAME, AdminView.class);
+//        navigator.addView(UserView.NAME, UserView.class);
         navigator.navigateTo(UserView.NAME);
 
         sideMenu.setMenuCaption(ApplicationConstant.NOMBRE_SISTEMA);
@@ -95,7 +95,7 @@ public class MainView extends HorizontalLayout implements View {
 
     private void addView(String menuName, Resource icon, String viewname, Class<? extends View> viewClass) {
         sideMenu.addNavigation(menuName, icon, viewname);
-        navigator.addView(viewname, viewClass);
+//        navigator.addView(viewname, viewClass);
     }
 
     private void setUser(String name, Resource icon) {
